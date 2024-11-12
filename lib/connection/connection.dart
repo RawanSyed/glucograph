@@ -26,6 +26,8 @@ class DatabaseHelper {
       rethrow;  // Rethrow the exception to handle it higher up if needed
     }
   }
+
+  //fetch name from database
   static Future<List<Map<String, dynamic>>> fetchPatientNamesAndGender() async {
   final conn = await connect();
   List<Map<String, dynamic>> patients = [];
@@ -43,4 +45,5 @@ class DatabaseHelper {
 
   return patients;
 }
+  
 }
