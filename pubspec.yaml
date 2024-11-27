@@ -42,6 +42,7 @@ dependencies:
   mysql_client: ^0.0.27
   http: ^1.2.2
   mysql1: ^0.20.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +86,13 @@ flutter:
     - family: Pacifico
       fonts:
         - asset: fonts/Pacifico-Regular.ttf
+    - family: new
+      fonts:
+        - asset: fonts/1.ttf
+    - family: new2
+      fonts:
+        - asset: fonts/2.ttf
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

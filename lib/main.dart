@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:glucoograph/HealthStatusChart.dart';
 import 'package:glucoograph/connection/connection.dart';
+import 'package:glucoograph/constants/constants.dart';
 import 'package:glucoograph/welcome.dart';
-  // استيراد ملف الاتصال بقاعدة البيانات
+// استيراد ملف الاتصال بقاعدة البيانات
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // تأكد من تهيئة التطبيقات قبل القيام بأي عملية async
+  WidgetsFlutterBinding
+      .ensureInitialized(); // تأكد من تهيئة التطبيقات قبل القيام بأي عملية async
   try {
     // اختبار الاتصال بالقاعدة
     await DatabaseHelper.connect();
@@ -19,12 +22,18 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Database Connection Test',
-      home: Welcome()
-        
-    
-    );
+    return InteractiveViewer(
+        panEnabled: true, // تمكين السحب
+        scaleEnabled: true, // تمكين التكبير
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Database Connection Test',
+            theme: ThemeData(
+              primaryColor: kPrimaryColor, // اختر اللون الذي ترغب فيه
+              progressIndicatorTheme: ProgressIndicatorThemeData(
+                color: kPrimaryColor, // تغيير لون اللودنج
+              ),
+            ),
+            home: Welcome()));
   }
 }

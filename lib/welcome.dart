@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glucoograph/HealthStatusChart.dart';
 import 'package:glucoograph/constants/constants.dart';
 import 'package:glucoograph/user.dart';
 
@@ -41,14 +42,14 @@ class Welcome extends StatelessWidget {
             const SizedBox(
               width: 350,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                     "GlucoGraph helps you track blood sugar levels over time, making it easy to spot trends and manage your health effectively.",
                     style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: kPrimaryFont,
-                      color: Colors.grey,
-                    )),
+                        fontSize: 15,
+                        fontFamily: kPrimaryFont,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold)),
               ),
             ),
             const SizedBox(
@@ -56,8 +57,8 @@ class Welcome extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => User()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => HealthStatusChart()));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
