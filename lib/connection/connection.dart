@@ -26,46 +26,41 @@ class DatabaseHelper {
       rethrow;
     }
   }
-<<<<<<< HEAD
-=======
 
-  //fetch name from database
-  static Future<List<Map<String, dynamic>>> fetchPatientNamesAndGender() async {
-  final conn = await connect();
-  List<Map<String, dynamic>> patients = [];
->>>>>>> 5cad30e1aabd3453c1e1b8f79395fe74b0899ca2
-
-  // دالة لجلب بيانات المرضى مع إمكانية فلترة المرضى الذين لديهم health_status > 80
   static Future<List<Map<String, dynamic>>> fetchPatientNamesAndGender(
       {bool filterAbove80 = false}) async {
     final conn = await connect();
     List<Map<String, dynamic>> patients = [];
 
     try {
-      // استعلام مع استخدام DISTINCT لضمان أن كل مريض يظهر مرة واحدة
       String query = '''
-      SELECT DISTINCT p.name, p.gender
-      FROM patient p
-      JOIN biologicalindicators bi ON p.id = bi.patient_code
-      WHERE 1
+     SELECT p.name, p.gender, bi.health_status,p.age
+  FROM patient p
+  JOIN biologicalindicators bi ON p.id = bi.patient_code
+  WHERE bi.date = (
+    SELECT MAX(bi2.date)
+    FROM biologicalindicators bi2
+    WHERE bi2.patient_code = p.id
+  )
     ''';
 
       if (filterAbove80) {
         query += '''
-        AND bi.health_status > 80
+        AND bi.health_status > 90
         AND bi.date = (SELECT MAX(bi2.date) 
                        FROM biologicalindicators bi2 
                        WHERE bi2.patient_code = p.id)
-      '''; // إضافة الفلترة بناءً على آخر تاريخ للمريض مع health_status > 80
+      ''';
       }
 
       var results = await conn.query(query);
-      if (results.isEmpty) {
-        print('No patients found');
-      }
-
       for (var row in results) {
-        patients.add({'name': row[0] as String, 'gender': row[1] as String});
+        patients.add({
+          'name': row[0] as String,
+          'gender': row[1] as String,
+          "health_status": row[2] as String,
+          'age': row[3] as int
+        });
       }
     } catch (e) {
       print('Error fetching patient data: $e');
@@ -77,7 +72,6 @@ class DatabaseHelper {
     return patients;
   }
 
-  // دالة لجلب بيانات المؤشرات البيولوجية بناءً على اسم المريض
   static Future<List<Map<String, dynamic>>> getBiologicalIndicators(
       String patientName) async {
     final conn = await connect();
@@ -88,17 +82,6 @@ class DatabaseHelper {
              FROM biologicalindicators bi
              JOIN patient p ON p.id = bi.patient_code
              WHERE p.name = ?''', [patientName]);
-
-      // إذا لم توجد بيانات للمريض
-      if (results.isEmpty) {
-        print('No biological indicators found for $patientName.');
-      } else {
-        print('Found ${results.length} records for $patientName:');
-        for (var row in results) {
-          print(
-              'Date: ${row[3]}, Temperature: ${row[0]}, Blood Sugar: ${row[1]}, Blood Pressure: ${row[2]}');
-        }
-      }
 
       return results.map((row) {
         return {
@@ -116,7 +99,6 @@ class DatabaseHelper {
     }
   }
 
-  // دالة للحصول على عدد المرضى الذين لديهم health_status > 80 ضمن فترة محددة
   static Future<List<Map<String, dynamic>>> getHealthStatusOver80(
       DateTimeRange? selectedDateRange) async {
     final conn = await connect();
@@ -140,11 +122,10 @@ class DatabaseHelper {
         results = await conn.query(query);
       }
 
-      // تحويل النتائج إلى قائمة من الخرائط
       for (var row in results) {
         resultsList.add({
-          'date': row[0] as DateTime, // تاريخ القياس
-          'count': row[1] as int, // عدد المرضى في هذه الفترة
+          'date': row[0] as DateTime,
+          'count': row[1] as int,
         });
       }
     } catch (e) {
@@ -157,8 +138,3 @@ class DatabaseHelper {
     return resultsList;
   }
 }
-<<<<<<< HEAD
-=======
-  
-}
->>>>>>> 5cad30e1aabd3453c1e1b8f79395fe74b0899ca2
