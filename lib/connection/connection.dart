@@ -26,6 +26,14 @@ class DatabaseHelper {
       rethrow;
     }
   }
+<<<<<<< HEAD
+=======
+
+  //fetch name from database
+  static Future<List<Map<String, dynamic>>> fetchPatientNamesAndGender() async {
+  final conn = await connect();
+  List<Map<String, dynamic>> patients = [];
+>>>>>>> 5cad30e1aabd3453c1e1b8f79395fe74b0899ca2
 
   // دالة لجلب بيانات المرضى مع إمكانية فلترة المرضى الذين لديهم health_status > 80
   static Future<List<Map<String, dynamic>>> fetchPatientNamesAndGender(
@@ -149,3 +157,8 @@ class DatabaseHelper {
     return resultsList;
   }
 }
+<<<<<<< HEAD
+=======
+  
+}
+>>>>>>> 5cad30e1aabd3453c1e1b8f79395fe74b0899ca2
