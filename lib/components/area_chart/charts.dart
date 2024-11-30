@@ -87,104 +87,120 @@ class _AllGraphState extends State<all_area> {
             onPressed: () =>
                 _selectDateRange(context), // استدعاء نافذة تحديد التاريخ
           ),
-          // زر لإعادة تحميل الرسومات البيانية
-          IconButton(
-            icon: Icon(
-              Icons.refresh,
-              color: Colors.white,
-              size: 25,
-            ),
-            onPressed: resetGraphs, // إعادة تحميل الرسوم البيانية
-          ),
-          // زر العودة للصفحة الرئيسية
-          IconButton(
-              icon: Icon(
-                Icons.home,
-                color: Colors.white,
-                size: 25,
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              height: 150,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                ),
+                child: Text(
+                  'Graphs',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: kPrimaryFont,
+                  ),
+                ),
               ),
-              onPressed: () {
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(Icons.home, color: Colors.black, size: 25),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('Home'),
+                ],
+              ),
+              onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => User()),
                   (route) => false,
                 );
-              })
-        ],
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.area_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('All Graphs'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = true;
+                  showBloodPressure = true;
+                  showTemp = true;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.area_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Blood Sugar'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = true;
+                  showBloodPressure = false;
+                  showTemp = false;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.area_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Blood Pressure'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = false;
+                  showBloodPressure = true;
+                  showTemp = false;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.area_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Temperature'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = false;
+                  showBloodPressure = false;
+                  showTemp = true;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         // تفعيل التمرير في الصفحة
         child: Column(
           children: [
-            // عرض الأزرار أفقيًا
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                height: 55, // تحديد ارتفاع الأزرار
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal, // الاتجاه أفقي
-                  itemCount: 3, // عدد الأزرار
-                  itemBuilder: (context, index) {
-                    String buttonText;
-                    // Define the button text based on the index
-                    switch (index) {
-                      case 0:
-                        buttonText = "Blood Sugar";
-                        break;
-                      case 1:
-                        buttonText = "Blood Pressure";
-                        break;
-                      case 2:
-                        buttonText = "Temperature";
-                        break;
-                      default:
-                        buttonText = "Button ${index + 1}";
-                    }
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            // Hide other graphs and show the selected one
-                            if (index == 0) {
-                              showBloodSugar = true;
-                              showBloodPressure = false;
-                              showTemp = false;
-                            } else if (index == 1) {
-                              showBloodPressure = true;
-                              showBloodSugar = false;
-                              showTemp = false;
-                            } else if (index == 2) {
-                              showTemp = true;
-                              showBloodSugar = false;
-                              showBloodPressure = false;
-                            }
-                          });
-                        },
-                        child: Text(
-                          buttonText, // Change the button text based on the index
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 12,
-                            fontFamily: kPrimaryFont,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(236, 236, 236, 1),
-                          fixedSize: Size(125, 40),
-                          elevation: 3, // ارتفاع الظل
-
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
             SizedBox(
               height: 20,
             ),
