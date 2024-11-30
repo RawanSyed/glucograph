@@ -192,37 +192,6 @@ class _AllGraphState extends State<AllGraph> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // عرض الأزرار أفقيًا
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                height: 55,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    String buttonText;
-                    switch (index) {
-                      case 0:
-                        buttonText = "Blood Sugar";
-                        break;
-                      case 1:
-                        buttonText = "Blood Pressure";
-                        break;
-                      case 2:
-                        buttonText = "Temperature";
-                        break;
-                      default:
-                        buttonText = "Button ${index + 1}";
-                    }
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                    );
-                  },
-                ),
-              ),
-            ),
             // عرض الرسومات البيانية
             SizedBox(height: 20),
             if (showBloodSugar) ...[
