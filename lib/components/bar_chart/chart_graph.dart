@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:glucoograph/components/bar_chart/graph_blood%20sugar.dart';
-
 import 'package:glucoograph/components/bar_chart/graph_bloodpressure.dart';
 import 'package:glucoograph/components/bar_chart/graph_temp.dart';
 import 'package:glucoograph/constants/constants.dart';
@@ -80,21 +79,115 @@ class _AllGraphState extends State<AllGraph> {
             onPressed: () =>
                 _selectDateRange(context), // استدعاء نافذة تحديد التاريخ
           ),
-          // زر لإعادة تحميل الرسومات البيانية
-          IconButton(
-            icon: Icon(Icons.refresh, color: Colors.white, size: 25),
-            onPressed: resetGraphs,
-          ),
-          // زر العودة للصفحة الرئيسية
-          IconButton(
-              icon: Icon(Icons.home, color: Colors.white, size: 25),
-              onPressed: () {
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              height: 150,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                ),
+                child: Text(
+                  'Graphs',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: kPrimaryFont,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(Icons.home, color: Colors.black, size: 25),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('Home'),
+                ],
+              ),
+              onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => User()),
                   (route) => false,
                 );
-              })
-        ],
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.bar_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('All Graphs'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = true;
+                  showBloodPressure = true;
+                  showTemp = true;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.bar_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Blood Sugar'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = true;
+                  showBloodPressure = false;
+                  showTemp = false;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.bar_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Blood Pressure'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = false;
+                  showBloodPressure = true;
+                  showTemp = false;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+            ListTile(
+              title: Row(children: [
+                Icon(Icons.bar_chart, color: Colors.black, size: 25),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Temperature'),
+              ]),
+              onTap: () {
+                setState(() {
+                  showBloodSugar = false;
+                  showBloodPressure = false;
+                  showTemp = true;
+                });
+                Navigator.pop(context); // إغلاق الـ Drawer عند الانتقال
+              },
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -125,34 +218,6 @@ class _AllGraphState extends State<AllGraph> {
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            if (index == 0) {
-                              showBloodSugar = true;
-                              showBloodPressure = false;
-                              showTemp = false;
-                            } else if (index == 1) {
-                              showBloodPressure = true;
-                              showBloodSugar = false;
-                              showTemp = false;
-                            } else if (index == 2) {
-                              showTemp = true;
-                              showBloodSugar = false;
-                              showBloodPressure = false;
-                            }
-                          });
-                        },
-                        child: Text(buttonText,
-                            style: TextStyle(color: kPrimaryColor)),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(236, 236, 236, 1),
-                          fixedSize: Size(125, 40),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                        ),
-                      ),
                     );
                   },
                 ),
@@ -190,7 +255,8 @@ class _AllGraphState extends State<AllGraph> {
                 width: 400,
                 child: GraphTemp(
                   patientName: widget.patientName,
-                  selectedDateRange: selectedDateRange, // تمرير التواريخ المحددة
+                  selectedDateRange:
+                      selectedDateRange, // تمرير التواريخ المحددة
                 ),
               ),
             ],
