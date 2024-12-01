@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:glucoograph/components/area_chart/press.dart';
 import 'package:glucoograph/components/area_chart/sugar.dart';
 import 'package:glucoograph/components/area_chart/temp.dart';
-import 'package:glucoograph/components/linw_chart/pressure.dart';
-import 'package:glucoograph/components/linw_chart/sugar.dart';
-import 'package:glucoograph/components/linw_chart/temp.dart';
 import 'package:glucoograph/constants/constants.dart';
 import 'package:glucoograph/user.dart';
-import 'package:intl/intl.dart'; // استيراد مكتبة Intl
 
 class all_area extends StatefulWidget {
   final String patientName;
