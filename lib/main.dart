@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:glucoograph/HealthStatusChart.dart';
+import 'package:glucoograph/auth/login.dart';
 import 'package:glucoograph/connection/connection.dart';
 import 'package:glucoograph/constants/constants.dart';
-import 'package:glucoograph/welcome.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'auth/auth.dart';
-// استيراد ملف الاتصال بقاعدة البيانات
+
 
 void main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized(); // تأكد من تهيئة التطبيقات قبل القيام بأي عملية async
+  WidgetsFlutterBinding.ensureInitialized(); // تأكد من تهيئة التطبيقات قبل القيام بأي عملية async
   try {
     // اختبار الاتصال بالقاعدة
     await DatabaseHelper.connect();
@@ -23,30 +18,20 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690), // Adjust to your design's dimensions
-      minTextAdapt: true,
-      builder: (context, child) {
-        return InteractiveViewer(
-          panEnabled: true, // Enable panning
-          scaleEnabled: true, // Enable scaling
-          child: GetMaterialApp(
+    return InteractiveViewer(
+        panEnabled: true, // تمكين السحب
+        scaleEnabled: true, // تمكين التكبير
+        child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Database Connection Test',
             theme: ThemeData(
-              primaryColor: kPrimaryColor, // Set your preferred color
+              primaryColor: kPrimaryColor, // اختر اللون الذي ترغب فيه
               progressIndicatorTheme: ProgressIndicatorThemeData(
-                color: kPrimaryColor, // Customize loading indicator color
+                color: kPrimaryColor, // تغيير لون اللودنج
               ),
             ),
-            home: const Auth(), // Auth widget as the home page
-          ),
-        );
-      },
-    );
+            home: LogInView()));
   }
 }
