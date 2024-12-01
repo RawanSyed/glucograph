@@ -38,6 +38,7 @@ class _AllGraphState extends State<AllGraph> {
   }
 
   // دالة لاختيار التاريخ
+
   Future<void> _selectDateRange(BuildContext context) async {
     final DateTimeRange? picked = await showDateRangePicker(
       context: context,
@@ -120,6 +121,7 @@ class _AllGraphState extends State<AllGraph> {
             ),
             ListTile(
               title: Row(children: [
+                Icon(Icons.bubble_chart, color: Colors.black, size: 25),
                 Icon(Icons.bar_chart, color: Colors.black, size: 25),
                 SizedBox(
                   width: 5,
@@ -137,6 +139,7 @@ class _AllGraphState extends State<AllGraph> {
             ),
             ListTile(
               title: Row(children: [
+                Icon(Icons.bubble_chart, color: Colors.black, size: 25),
                 Icon(Icons.bar_chart, color: Colors.black, size: 25),
                 SizedBox(
                   width: 5,
@@ -154,6 +157,7 @@ class _AllGraphState extends State<AllGraph> {
             ),
             ListTile(
               title: Row(children: [
+                Icon(Icons.bubble_chart, color: Colors.black, size: 25),
                 Icon(Icons.bar_chart, color: Colors.black, size: 25),
                 SizedBox(
                   width: 5,
@@ -171,6 +175,7 @@ class _AllGraphState extends State<AllGraph> {
             ),
             ListTile(
               title: Row(children: [
+                Icon(Icons.bubble_chart, color: Colors.black, size: 25),
                 Icon(Icons.bar_chart, color: Colors.black, size: 25),
                 SizedBox(
                   width: 5,
@@ -192,8 +197,14 @@ class _AllGraphState extends State<AllGraph> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
+            // Display graphs conditionally
+
             // عرض الرسومات البيانية
             SizedBox(height: 20),
+
             if (showBloodSugar) ...[
               Container(
                 height: 700,
