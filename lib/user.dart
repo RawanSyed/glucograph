@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glucoograph/HealthStatusChart.dart';
 import 'package:glucoograph/connection/connection.dart';
 import 'package:glucoograph/constants/constants.dart';
 import 'package:glucoograph/graphs_type.dart';
@@ -62,6 +63,17 @@ class _UserState extends State<User> {
                 ),
               ),
               actions: [
+                IconButton(
+                  icon: Icon(Icons.auto_graph),
+                  color: kPrimaryColor,
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => HealthStatusChart()),
+                      (route) => false,
+                    );
+                  },
+                ),
                 IconButton(
                   icon: Icon(
                     _filterAbove90 ? Icons.filter_list_off : Icons.filter_list,
